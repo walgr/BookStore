@@ -100,10 +100,6 @@ class _MyHomePageState extends State<MyHomePage> {
           },
         ),
         body: Container(
-          constraints: BoxConstraints(
-            minWidth: 720,
-            minHeight: 1080,
-          ),
           child: tabBodies[currentIndex],
         ));
   }

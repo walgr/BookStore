@@ -18,8 +18,8 @@ class BookShelfPage extends StatefulWidget {
 class _BookShelfPageState extends State<BookShelfPage> {
   bool isItem = true;
   List<Menu> choices = <Menu>[
-    Menu('更新目录', icon: MyIcons.refresh_black_24dp),
-    Menu('添加本地', icon: MyIcons.add),
+    Menu(0, '更新目录', icon: MyIcons.refresh_black_24dp),
+    Menu(1, '添加本地', icon: MyIcons.add),
   ];
 
   void _select(Menu choice) {
