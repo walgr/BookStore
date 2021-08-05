@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 class ATECheckBox extends StatelessWidget {
   final bool value;
-  final ValueChanged<bool?>? _onChanged;
+  final ValueChanged<bool?>? onChanged;
   final String title;
 
-  ATECheckBox(this.value, this.title, this._onChanged);
+  ATECheckBox({required this.value, required this.title, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +14,13 @@ class ATECheckBox extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Row(
         children: [
-          Checkbox(value: this.value, onChanged: this._onChanged),
-          Expanded(child: Text(this.title)
+          Container(
+            width: 24,
+            height: 24,
+            margin: EdgeInsets.only(right: 4),
+            child: Checkbox(value: this.value, onChanged: this.onChanged),
+          ),
+          Expanded(child: Text(this.title, style: TextStyle(fontSize: 14, color: Colors.black),)
           )
         ],
       ),

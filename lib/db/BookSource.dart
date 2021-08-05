@@ -2,6 +2,11 @@
 import 'dart:core';
 
 import 'package:book_store/constant/BookType.dart';
+import 'package:book_store/data/entities/rule/BookInfoRule.dart';
+import 'package:book_store/data/entities/rule/ContentRule.dart';
+import 'package:book_store/data/entities/rule/ExploreRule.dart';
+import 'package:book_store/data/entities/rule/SearchRule.dart';
+import 'package:book_store/data/entities/rule/TocRule.dart';
 
 class BookSource {
   String bookSourceName = "";                   // 名称
@@ -18,10 +23,10 @@ class BookSource {
   int lastUpdateTime = 0;                       // 最后更新时间，用于排序
   int weight = 0;                               // 智能排序的权重
   String? exploreUrl;                           // 发现url
-  // ExploreRule? ruleExplore;                     // 发现规则
-  // String? searchUrl;                            // 搜索url
-  // SearchRule? ruleSearch;                       // 搜索规则
-  // BookInfoRule? ruleBookInfo;                   // 书籍信息页规则
-  // TocRule? ruleToc;                             // 目录页规则
-  // ContentRule? uleContent;                      // 正文页规则
+  ExploreRule? ruleExplore;                     // 发现规则
+  String? searchUrl;                            // 搜索url
+  SearchRule? ruleSearch;                       // 搜索规则
+  BookInfoRule? ruleBookInfo;                   // 书籍信息页规则
+  TocRule? ruleToc;                             // 目录页规则
+  ContentRule? uleContent;                      // 正文页规则
 }
