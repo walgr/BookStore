@@ -1,10 +1,9 @@
-import 'dart:developer';
-
 import 'package:book_store/base/BaseDialogFragment.dart';
 import 'package:book_store/constant/MyColors.dart';
-import 'package:book_store/db/BookSource.dart';
+import 'package:book_store/data/entities/BookSource.dart';
+import 'package:book_store/widget/dialog/WaitDialog.dart';
 import 'package:flutter/material.dart';
-import 'package:book_store/widget/ItemSourceImportInList.dart';
+import 'package:book_store/ui/association/adapteritem/SourceImportItemView.dart';
 
 import 'ImportBookSourceViewModel.dart';
 
@@ -18,9 +17,18 @@ class ImportBookSourceDialog extends BaseDialogFragment {
   State<StatefulWidget> createState() {
     return _ImportBookSourceDialogState();
   }
+
+  static void show(BuildContext context, BaseDialogFragment dialogFragment) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return dialogFragment;
+        });
+  }
 }
 
-class _ImportBookSourceDialogState extends BaseDialogFragmentState<ImportBookSourceDialog> {
+class _ImportBookSourceDialogState
+    extends BaseDialogFragmentState<ImportBookSourceDialog> {
   ImportBookSourceViewModel viewModel = ImportBookSourceViewModel();
 
   @override
@@ -30,9 +38,9 @@ class _ImportBookSourceDialogState extends BaseDialogFragmentState<ImportBookSou
   }
 
   Future<void> loadData() async {
-    await viewModel.importSource(widget.source);
-    log('size:${viewModel.allSources.length}');
-    setState(() {});
+    await viewModel.importSource(widget.source, callback: () {
+      setState(() {});
+    });
   }
 
   String _getBookSourceState(BookSource item, BookSource? localSource) {
@@ -52,6 +60,16 @@ class _ImportBookSourceDialogState extends BaseDialogFragmentState<ImportBookSou
     });
     viewModel.upSelectText();
     setState(() {});
+  }
+
+  void _onCancelClick() {
+    Navigator.pop(context);
+  }
+
+  void _onEnsureClick() {
+    Navigator.pop(context);
+    WaitDialog.show(context, WaitDialog());
+    viewModel.importSourceAndCallback(() => {Navigator.pop(context)});
   }
 
   @override
@@ -83,10 +101,10 @@ class _ImportBookSourceDialogState extends BaseDialogFragmentState<ImportBookSou
                             child: Container(),
                           )
                         : ListView.builder(
-                      itemExtent: 36,
+                            itemExtent: 36,
                             itemCount: viewModel.allSources.length,
                             itemBuilder: (context, index) {
-                              return ItemSourceImportInList(
+                              return SourceImportItemView(
                                   value: viewModel.selectStatus[index],
                                   bookSourceName: viewModel
                                       .allSources[index].bookSourceName,
@@ -108,10 +126,13 @@ class _ImportBookSourceDialogState extends BaseDialogFragmentState<ImportBookSou
                 child: Row(
                   children: [
                     GestureDetector(
-                      child: Text(
-                        viewModel.tvFooterLeftText,
-                        style: TextStyle(
-                            fontSize: 14, color: MyColors.colorPrimary),
+                      child: Container(
+                        color: Colors.transparent,
+                        child: Text(
+                          viewModel.tvFooterLeftText,
+                          style: TextStyle(
+                              fontSize: 14, color: MyColors.colorPrimary),
+                        ),
                       ),
                       onTap: _onTvFooterLeftClick,
                     ),
@@ -121,23 +142,30 @@ class _ImportBookSourceDialogState extends BaseDialogFragmentState<ImportBookSou
                           child: IntrinsicWidth(
                             child: Row(
                               children: [
-                                Container(
-                                  child: Text(
-                                    '取消',
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color: MyColors.colorPrimary),
+                                GestureDetector(
+                                  onTap: _onCancelClick,
+                                  child: Container(
+                                    color: Colors.transparent,
+                                    child: Text(
+                                      '取消',
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: MyColors.colorPrimary),
+                                    ),
                                   ),
                                 ),
-                                Container(
-                                  margin: EdgeInsets.only(left: 24),
-                                  child: Text(
-                                    '确定',
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color: MyColors.colorPrimary),
-                                  ),
-                                )
+                                GestureDetector(
+                                    onTap: _onEnsureClick,
+                                    child: Container(
+                                      color: Colors.transparent,
+                                      margin: EdgeInsets.only(left: 24),
+                                      child: Text(
+                                        '确定',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: MyColors.colorPrimary),
+                                      ),
+                                    ))
                               ],
                             ),
                           )),

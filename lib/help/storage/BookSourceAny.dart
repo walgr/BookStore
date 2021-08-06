@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:book_store/constant/BookType.dart';
+
 part 'BookSourceAny.g.dart';
 
 @JsonSerializable()
@@ -10,8 +11,8 @@ class BookSourceAny {
   int bookSourceType = BookType.defaultType; // 类型，0 文本，1 音频
   String? bookUrlPattern; // 详情页url正则
   int customOrder = 0; // 手动排序编号
-  bool enabled = true; // 是否启用
-  bool enabledExplore = true; // 启用发现
+  int enabled = 1; // 是否启用
+  int enabledExplore = 1; // 启用发现
   String? header; // 请求头
   String? loginUrl; // 登录地址
   String? bookSourceComment; // 注释
@@ -29,4 +30,6 @@ class BookSourceAny {
 
   factory BookSourceAny.fromJson(Map<String, dynamic> json) =>
       _$BookSourceAnyFromJson(json);
+
+  Map<String, dynamic> toJson() => _$BookSourceAnyToJson(this);
 }

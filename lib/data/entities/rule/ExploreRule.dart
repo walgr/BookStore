@@ -33,4 +33,11 @@ class ExploreRule implements BookListRule {
 
   @override
   String? wordCount;
+
+  ExploreRule();
+
+  factory ExploreRule.fromJson(Map<String, dynamic> json) =>
+      _$ExploreRuleFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ExploreRuleToJson(this);
 }

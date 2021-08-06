@@ -14,4 +14,11 @@ class BookInfoRule {
   String? tocUrl;
   String? wordCount;
   String? canReName;
+
+  BookInfoRule();
+
+  factory BookInfoRule.fromJson(Map<String, dynamic> json) =>
+      _$BookInfoRuleFromJson(json);
+
+  Map<String, dynamic> toJson() => _$BookInfoRuleToJson(this);
 }

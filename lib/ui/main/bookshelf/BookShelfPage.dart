@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:book_store/bean/Menu.dart';
 import 'package:book_store/constant/MyColors.dart';
 import 'package:book_store/constant/MyIcons.dart';
-import 'package:book_store/widget/ItemBookShelfInList.dart';
+import 'package:book_store/ui/main/bookshelf/adapteritem/BookShelfItemView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -85,7 +85,7 @@ class _BookShelfPageState extends State<BookShelfPage> {
                             ? ListView.builder(
                                 itemCount: 20,
                                 itemBuilder: (BuildContext context, int index) {
-                                  return ItemBookShelfInList();
+                                  return BookShelfItemView();
                                 })
                             : GridView.builder(
                                 itemCount: 20,
@@ -96,7 +96,7 @@ class _BookShelfPageState extends State<BookShelfPage> {
                                   crossAxisSpacing: 10.0,
                                 ),
                                 itemBuilder: (BuildContext context, int index) {
-                                  return ItemBookShelfInList();
+                                  return BookShelfItemView();
                                 })))))
       ],
     );

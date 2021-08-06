@@ -33,4 +33,11 @@ class SearchRule implements BookListRule {
 
   @override
   String? wordCount;
+
+  SearchRule();
+
+  factory SearchRule.fromJson(Map<String, dynamic> json) =>
+      _$SearchRuleFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SearchRuleToJson(this);
 }

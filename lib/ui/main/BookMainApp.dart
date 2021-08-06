@@ -1,3 +1,4 @@
+import 'package:book_store/constant/AppCtx.dart';
 import 'package:flutter/material.dart';
 import 'bookshelf/BookShelfPage.dart';
 import 'explore/ExplorePage.dart';
@@ -9,6 +10,7 @@ class BookMainApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    AppCtx.context = context;
     return MaterialApp(
       title: '阅读',
       theme: ThemeData(

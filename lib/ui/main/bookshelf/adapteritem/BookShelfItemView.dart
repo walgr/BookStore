@@ -3,16 +3,17 @@ import 'package:book_store/constant/MyIcons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'CoverImageView.dart';
+import '../../../../widget/CoverImageView.dart';
 
-class ItemBookShelfInList extends StatefulWidget {
+class BookShelfItemView extends StatefulWidget {
+
   @override
   State<StatefulWidget> createState() {
-    return _ItemBookShelfInListState();
+    return _BookShelfItemViewState();
   }
 }
 
-class _ItemBookShelfInListState extends State<ItemBookShelfInList> {
+class _BookShelfItemViewState extends State<BookShelfItemView> {
   @override
   Widget build(BuildContext context) {
     return IntrinsicHeight(

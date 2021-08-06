@@ -1,15 +1,15 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'ATECheckBox.dart';
+import '../../../widget/ATECheckBox.dart';
 
-class ItemSourceImportInList extends StatefulWidget {
+class SourceImportItemView extends StatefulWidget {
   bool value;
   final String bookSourceName;
   final String bookSourceState;
   final ValueChanged<bool>? onChanged;
 
-  ItemSourceImportInList(
+  SourceImportItemView(
       {required this.value,
       required this.bookSourceName,
       required this.bookSourceState,
@@ -17,11 +17,11 @@ class ItemSourceImportInList extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _ItemSourceImportInListState();
+    return _SourceImportItemViewState();
   }
 }
 
-class _ItemSourceImportInListState extends State<ItemSourceImportInList> {
+class _SourceImportItemViewState extends State<SourceImportItemView> {
 
   _onChanged() {
     setState(() {

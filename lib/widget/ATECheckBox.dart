@@ -20,7 +20,7 @@ class ATECheckBox extends StatelessWidget {
             margin: EdgeInsets.only(right: 4),
             child: Checkbox(value: this.value, onChanged: this.onChanged),
           ),
-          Expanded(child: Text(this.title, style: TextStyle(fontSize: 14, color: Colors.black),)
+          Expanded(child: Text(this.title, style: TextStyle(fontSize: 14, color: Colors.black), maxLines: 1,)
           )
         ],
       ),

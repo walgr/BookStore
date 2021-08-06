@@ -9,4 +9,11 @@ class TocRule {
   String? isVip;
   String? updateTime;
   String? nextTocUrl;
+
+  TocRule();
+
+  factory TocRule.fromJson(Map<String, dynamic> json) =>
+      _$TocRuleFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TocRuleToJson(this);
 }

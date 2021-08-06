@@ -1,12 +1,16 @@
 import 'dart:convert';
-import 'dart:developer';
 
-import 'package:book_store/db/BookSource.dart';
+import 'package:book_store/base/BaseViewModel.dart';
+import 'package:book_store/data/entities/BookSource.dart';
+import 'package:book_store/db/DbUtils.dart';
+import 'package:book_store/help/AppConfig.dart';
+import 'package:book_store/help/SourceHelp.dart';
 import 'package:book_store/help/storage/OldRule.dart';
 import 'package:book_store/utils/StringExtensions.dart';
 import 'package:json_path/json_path.dart';
 
-class ImportBookSourceViewModel {
+class ImportBookSourceViewModel extends BaseViewModel {
+  String? groupName;
   List<BookSource> allSources = [];
   List<BookSource?> checkSources = [];
   List<bool> selectStatus = [];
@@ -34,7 +38,33 @@ class ImportBookSourceViewModel {
     return count;
   }
 
-  Future<void> importSource(String text) async {
+  Future<void> importSourceAndCallback(Function() callback) async {
+    var keepName = await AppConfig.importKeepName;
+    List<BookSource> selectSource = [];
+    int index = 0;
+    selectStatus.forEach((b) {
+      if (b) {
+        var source = allSources[index];
+        if (keepName) {
+          if (checkSources[index] != null) {
+            source.bookSourceName = checkSources[index]!.bookSourceName;
+            source.bookSourceGroup = checkSources[index]!.bookSourceGroup;
+            source.customOrder = checkSources[index]!.customOrder;
+          }
+        }
+        if (groupName != null) {
+          source.bookSourceGroup = groupName;
+        }
+        selectSource.add(source);
+      }
+      index++;
+    });
+    SourceHelp.insertBookSource(selectSource);
+    // ContentProcessor.upReplaceRules();xx
+    callback.call();
+  }
+
+  Future<void> importSource(String text, {Function? callback}) async {
     String mText = text.trim();
     if (mText.isJsonObject()) {
       JsonPath json = JsonPath('\$.sourceUrls');
@@ -45,7 +75,7 @@ class ImportBookSourceViewModel {
         });
       } else {
         BookSource? bookStore =
-        await OldRule.jsonToBookSource(jsonDecode(mText));
+            await OldRule.jsonToBookSource(jsonDecode(mText));
         if (bookStore != null) {
           allSources.add(bookStore);
         }
@@ -60,6 +90,7 @@ class ImportBookSourceViewModel {
       }
     } else if (false) {}
     await comparisonSource();
+    callback?.call();
   }
 
   Future<void> importSourceUrl(String url) async {
@@ -72,12 +103,16 @@ class ImportBookSourceViewModel {
   }
 
   Future<void> comparisonSource() async {
-    allSources.forEach((it) {
-      //TODO 查询数据库
-      BookSource? source = null;
+    allSources.forEach((it) async {
+      List<BookSource>? sourceList = await DbUtils.getInstance()
+          .queryItems(it, key: 'bookSourceUrl', value: it.bookSourceUrl);
+      BookSource? source;
+      if (sourceList != null && sourceList.isNotEmpty) {
+        source = sourceList[0];
+      }
       checkSources.add(source);
-      selectStatus.add(
-          source == null || source.lastUpdateTime < it.lastUpdateTime);
+      selectStatus
+          .add(source == null || source.lastUpdateTime < it.lastUpdateTime);
     });
     upSelectText();
   }
