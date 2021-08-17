@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:book_store/base/BaseViewModel.dart';
 import 'package:book_store/data/entities/BookSource.dart';
@@ -60,7 +61,7 @@ class ImportBookSourceViewModel extends BaseViewModel {
       index++;
     });
     SourceHelp.insertBookSource(selectSource);
-    // ContentProcessor.upReplaceRules();xx
+    // ContentProcessor.upReplaceRules();
     callback.call();
   }
 
@@ -103,7 +104,7 @@ class ImportBookSourceViewModel extends BaseViewModel {
   }
 
   Future<void> comparisonSource() async {
-    allSources.forEach((it) async {
+    for (var it in allSources) {
       List<BookSource>? sourceList = await DbUtils.getInstance()
           .queryItems(it, key: 'bookSourceUrl', value: it.bookSourceUrl);
       BookSource? source;
@@ -113,7 +114,7 @@ class ImportBookSourceViewModel extends BaseViewModel {
       checkSources.add(source);
       selectStatus
           .add(source == null || source.lastUpdateTime < it.lastUpdateTime);
-    });
+    }
     upSelectText();
   }
 

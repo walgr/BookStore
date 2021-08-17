@@ -26,11 +26,6 @@ class _CoverImageViewState extends State<CoverImageView> {
   double viewWidth = 66;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Stack(
       alignment: AlignmentDirectional.center,

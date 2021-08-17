@@ -23,7 +23,7 @@ class _WaitDialogState extends BaseDialogFragmentState<WaitDialog> {
   @override
   Widget buildChild(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Colors.blueAccent,
       padding: EdgeInsets.all(20),
       child: Center(
         child: Row(

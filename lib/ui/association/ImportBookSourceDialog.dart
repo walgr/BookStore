@@ -10,8 +10,10 @@ import 'ImportBookSourceViewModel.dart';
 class ImportBookSourceDialog extends BaseDialogFragment {
   final String source;
   final bool finishOnDismiss;
+  final Function()? onEventFinish;
 
-  ImportBookSourceDialog(this.source, {this.finishOnDismiss = false});
+  ImportBookSourceDialog(this.source,
+      {this.finishOnDismiss = false, this.onEventFinish});
 
   @override
   State<StatefulWidget> createState() {
@@ -66,10 +68,11 @@ class _ImportBookSourceDialogState
     Navigator.pop(context);
   }
 
-  void _onEnsureClick() {
+  void _onEnsureClick() async {
     Navigator.pop(context);
     WaitDialog.show(context, WaitDialog());
-    viewModel.importSourceAndCallback(() => {Navigator.pop(context)});
+    await viewModel.importSourceAndCallback(() => {Navigator.pop(context)});
+    widget.onEventFinish?.call();
   }
 
   @override

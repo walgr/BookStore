@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:book_store/bean/Menu.dart';
 import 'package:book_store/constant/MyColors.dart';
@@ -74,7 +75,9 @@ class _BookSourceState extends State<BookSourcePage> {
     if (result?.files.single.path != null) {
       File file = File(result!.files.single.path!);
       String fileStr = await file.readAsString();
-      ImportBookSourceDialog.show(context, ImportBookSourceDialog(fileStr));
+      ImportBookSourceDialog.show(context, ImportBookSourceDialog(fileStr, onEventFinish: () {
+        loadData();
+      },));
     } else {
       // User canceled the picker
     }
@@ -123,8 +126,10 @@ class _BookSourceState extends State<BookSourcePage> {
                 child: MediaQuery.removePadding(
                   removeTop: true,
                   context: context,
-                  child: ListView.builder(
+                  child: ListView.separated(
                       itemCount: viewModel.sourceList.length,
+                      separatorBuilder: (BuildContext context, int index) =>
+                          Divider(height: 0.5, thickness: 0.1, color: MyColors.tvTextSummary),
                       itemBuilder: (context, index) {
                         return Container(
                             child: BookSourceItemView(false,

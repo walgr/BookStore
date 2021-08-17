@@ -37,10 +37,10 @@ dependencies:
   file_picker: ^3.0.4
   # json转换
   json_path: ^0.3.0
-#  # 字符串格式化
-#  sprintf: ^5.0.0
   # 数据持久化
   shared_preferences: ^2.0.6
+  # 通知刷新
+  provider: ^5.0.0
 
 dev_dependencies:
   flutter_test:
