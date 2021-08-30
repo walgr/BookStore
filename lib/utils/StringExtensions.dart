@@ -1,6 +1,4 @@
-
 extension StringExtensions on String? {
-
   bool isJsonObject() {
     if (null == this) return false;
     String str = this!.trim();
@@ -11,5 +9,9 @@ extension StringExtensions on String? {
     if (null == this) return false;
     String str = this!.trim();
     return str.startsWith('[') && str.endsWith(']');
+  }
+
+  bool isNullOrEmpty() {
+    return this == null || this?.length == 0;
   }
 }

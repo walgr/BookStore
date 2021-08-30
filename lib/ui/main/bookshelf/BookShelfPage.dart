@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:book_store/bean/Menu.dart';
 import 'package:book_store/constant/MyColors.dart';
 import 'package:book_store/constant/MyIcons.dart';
+import 'package:book_store/ui/book/search/SearchPage.dart';
 import 'package:book_store/ui/main/bookshelf/adapteritem/BookShelfItemView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -34,6 +35,10 @@ class _BookShelfPageState extends State<BookShelfPage> {
     });
   }
 
+  void _onSearchClick() {
+    Navigator.push(context, new MaterialPageRoute(builder: (context) => new SearchPage()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -46,8 +51,9 @@ class _BookShelfPageState extends State<BookShelfPage> {
             style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
           ),
           actions: [
-            new IconButton(onPressed: null, icon: new Icon(Icons.search)),
+            new IconButton(onPressed: _onSearchClick, icon: MyIcons.search),
             new PopupMenuButton<Menu>(
+              offset: Offset(0,50),
               onSelected: _select,
               icon: Icon(Icons.more_vert),
               itemBuilder: (BuildContext context) {

@@ -120,9 +120,9 @@ class ImportBookSourceViewModel extends BaseViewModel {
 
   String upSelectText() {
     if (isSelectAll()) {
-      tvFooterLeftText = '取消全选(${selectCount()}/${allSources.length})';
+      tvFooterLeftText = "取消全选(${selectCount()}/${allSources.length})";
     } else {
-      tvFooterLeftText = '全选(${selectCount()}/${allSources.length})';
+      tvFooterLeftText = "全选(${selectCount()}/${allSources.length})";
     }
     return tvFooterLeftText;
   }

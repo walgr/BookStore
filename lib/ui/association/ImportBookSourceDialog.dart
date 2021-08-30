@@ -104,7 +104,6 @@ class _ImportBookSourceDialogState
                             child: Container(),
                           )
                         : ListView.builder(
-                            itemExtent: 36,
                             itemCount: viewModel.allSources.length,
                             itemBuilder: (context, index) {
                               return SourceImportItemView(

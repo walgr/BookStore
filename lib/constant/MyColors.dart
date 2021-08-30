@@ -8,4 +8,5 @@ class MyColors {
   static Color tvTextSummary = Color(0x8A2C2C2C);
   static Color tvTextPrimary = Color(0xDE000000);
 
+  static Color mdLightDisabled = Color(0x61000000);
 }

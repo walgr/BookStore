@@ -1,17 +1,18 @@
-import 'dart:developer';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:book_store/bean/Menu.dart';
 import 'package:book_store/constant/MyColors.dart';
 import 'package:book_store/constant/MyIcons.dart';
+import 'package:book_store/data/entities/BookSource.dart';
 import 'package:book_store/ui/association/ImportBookSourceDialog.dart';
+import 'package:book_store/widget/SelectActionBar.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:book_store/utils/StringExtensions.dart';
 
-import 'AdapterItem/BookSourceItemView.dart';
 import 'BookSourcePageViewModel.dart';
+import 'adapteritem/BookSourceItemView.dart';
 
 class BookSourcePage extends StatefulWidget {
   @override
@@ -20,9 +21,9 @@ class BookSourcePage extends StatefulWidget {
   }
 }
 
-class _BookSourceState extends State<BookSourcePage> {
-  BookSourcePageViewModel viewModel = BookSourcePageViewModel();
-
+class _BookSourceState extends State<BookSourcePage> implements CallBack, Callback {
+  late BookSourcePageViewModel viewModel;
+  int selectCount = 0, allCount = 0;
   List<Menu> menus = <Menu>[
     Menu(0, '新建书源', icon: MyIcons.import),
     Menu(1, '本地导入', icon: MyIcons.add),
@@ -52,12 +53,16 @@ class _BookSourceState extends State<BookSourcePage> {
   @override
   void initState() {
     super.initState();
+    viewModel = BookSourcePageViewModel(callBack: this);
     loadData();
   }
 
   void loadData() async {
     await viewModel.upBookSource(callback: () {
-      setState(() {});
+      setState(() {
+        selectCount = viewModel.selectList.length;
+        allCount = viewModel.sourceList.length;
+      });
     });
   }
 
@@ -75,9 +80,14 @@ class _BookSourceState extends State<BookSourcePage> {
     if (result?.files.single.path != null) {
       File file = File(result!.files.single.path!);
       String fileStr = await file.readAsString();
-      ImportBookSourceDialog.show(context, ImportBookSourceDialog(fileStr, onEventFinish: () {
-        loadData();
-      },));
+      ImportBookSourceDialog.show(
+          context,
+          ImportBookSourceDialog(
+            fileStr,
+            onEventFinish: () {
+              loadData();
+            },
+          ));
     } else {
       // User canceled the picker
     }
@@ -99,7 +109,7 @@ class _BookSourceState extends State<BookSourcePage> {
           brightness: Brightness.dark,
           backgroundColor: MyColors.colorPrimary,
           actions: [
-            new PopupMenuButton<Menu>(
+            PopupMenuButton<Menu>(
               onSelected: _select,
               icon: MyIcons.more,
               itemBuilder: (BuildContext context) {
@@ -129,14 +139,84 @@ class _BookSourceState extends State<BookSourcePage> {
                   child: ListView.separated(
                       itemCount: viewModel.sourceList.length,
                       separatorBuilder: (BuildContext context, int index) =>
-                          Divider(height: 0.5, thickness: 0.1, color: MyColors.tvTextSummary),
+                          Divider(
+                              height: 0.5,
+                              thickness: 0.1,
+                              color: MyColors.tvTextSummary),
                       itemBuilder: (context, index) {
                         return Container(
-                            child: BookSourceItemView(false,
-                                viewModel.sourceList[index].bookSourceName));
+                            child: BookSourceItemView(
+                          checkValue: viewModel.selectList
+                              .contains(viewModel.sourceList[index]),
+                          switchValue: viewModel.sourceList[index].enabled == 1,
+                          title: viewModel.sourceList[index].bookSourceGroup
+                                      ?.isNullOrEmpty() ??
+                                  true
+                              ? "${viewModel.sourceList[index].bookSourceName}"
+                              : "${viewModel.sourceList[index].bookSourceName}(${viewModel.sourceList[index].bookSourceGroup})",
+                          onCheckChanged: (checked) {
+                            viewModel.onCheckChange(index, checked);
+                          },
+                          onSwitchChanged: (select) {
+                            viewModel.onSwitchChange(index, select);
+                          },
+                        ));
                       }),
                 ))),
+        SelectActionBar(
+            selectCount: selectCount,
+            allCount: allCount,
+            callback: this)
       ],
     ));
+  }
+
+  @override
+  void debug(BookSource bookSource) {}
+
+  @override
+  void del(BookSource bookSource) {}
+
+  @override
+  void edit(BookSource bookSource) {}
+
+  @override
+  void toBottom(BookSource bookSource) {}
+
+  @override
+  void toTop(BookSource bookSource) {}
+
+  @override
+  void upCountView() {
+    selectCount = viewModel.selectList.length;
+    allCount = viewModel.sourceList.length;
+    setState(() {
+
+    });
+  }
+
+  @override
+  void upOrder() {}
+
+  @override
+  void update(List<BookSource> bookSourceList) {
+    setState(() {
+
+    });
+  }
+
+  @override
+  void onClickMainAction() {
+
+  }
+
+  @override
+  void revertSelection() {
+
+  }
+
+  @override
+  void selectAll(bool selectAll) {
+    viewModel.onSelectAllChange(selectAll);
   }
 }

@@ -5,6 +5,10 @@ class MyIcons {
 
   static final String mainPath = 'assets/main/';
 
+  //公用
+  static final Image more = Image.asset(mainPath + 'ic_more.png', width: 24, height: 24);
+  static final Image search = Image.asset(mainPath + 'ic_search.png', width: 24, height: 24);
+
   //首页Bottom按钮
   static final Image home = Image.asset(mainPath + 'ic_bottom_books_e.png', width: 24, height: 24);
   static final Image home_s = Image.asset(mainPath + 'ic_bottom_books_s.png', width: 24, height: 24);
@@ -16,7 +20,6 @@ class MyIcons {
   static final Image person_s = Image.asset(mainPath + 'ic_bottom_person_s.png', width: 24, height: 24);
 
   //书架菜单Icon
-  static final Image more = Image.asset(mainPath + 'ic_more.png', width: 24, height: 24);
   static final Image add = Image.asset(mainPath + 'ic_add.png', width: 24, height: 24);
   static final Image add_online = Image.asset(mainPath + 'ic_add_online.png', width: 24, height: 24);
   static final Image arrange = Image.asset(mainPath + 'ic_arrange.png', width: 24, height: 24);
@@ -45,4 +48,7 @@ class MyIcons {
   static final Image cfg_source = Image.asset(mainPath + 'ic_cfg_source.png', width: 24, height: 24);
   static final Image cfg_theme = Image.asset(mainPath + 'ic_cfg_theme.png', width: 24, height: 24);
   static final Image cfg_web = Image.asset(mainPath + 'ic_cfg_web.png', width: 24, height: 24);
+
+  //书源管理
+  static final Image source_item_edit = Image.asset(mainPath + 'ic_edit.png', width: 24, height: 24);
 }

@@ -38,7 +38,7 @@ class ATECheckBox extends StatelessWidget {
                   child: Text(
                     this.title,
                     style: TextStyle(fontSize: 14, color: Colors.black),
-                    maxLines: 1,
+                    maxLines: 1, overflow: TextOverflow.ellipsis
                   ))
             ],
           ),
